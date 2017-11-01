@@ -24,24 +24,6 @@
 	   (for [i (range (dec w)) j (range h)] #{[i j] [(inc i) j]})
 	   (for [i (range w) j (range (dec h))] #{[i j] [i (inc j)]}))))
 
-;; old draw
-;;(defn draw [w h maze] (doto (javax.swing.JFrame. "Maze") (.setContentPane
-;;	(doto (proxy [javax.swing.JPanel] []
-;;	   (paintComponent  [^java.awt.Graphics g]
-;;	      (let [g (doto ^java.awt.Graphics2D (.create g)
-;;	         (.scale 10 10)
-;;		 (.translate 1.5 1.5)
-;;		 (.setStroke (java.awt.BasicStroke. 0.4)))]
-;;	   (.drawRect g -1 -1 w h)
-;;	   (doseq [[[xa ya] [xb yb]] (map sort maze)]
-;;	      (let [[xc yc] (if (= xa xb) [(dec xa) ya] [xa (dec ya)])]
-;;		(.drawLine g xa ya xc yc))))))
-;;	   (.setPreferredSize (java.awt.Dimension. (* 10 (inc w)) (* 10 (inc h))))))
-;;	.pack
-;;	(.setVisible true)))
-
-;;;(draw 160 80 (maze (grid 160 80)))
-
 (require '[clojure.zip :as z])
 (defn ariadne-zip [labyrinth loc]
 	(let [paths (reduce (fn [index [a b]] (merge-with into index {a [b] b [a]}))
@@ -54,22 +36,22 @@
 	   [nil loc])))
 
 (defn draw [w h maze path] (doto (javax.swing.JFrame. "MAZE")
-				(.setContentPane
-				   (doto (proxy [javax.swing.JPanel] []
-				      (paintComponent [^java.awt.Graphics g]
-				         (let [g (doto ^java.awt.Graphics2D (.create g)
-				            (.scale 10 10)
-				            (.translate 1.5 1.5)
-				            (.setStroke (java.awt.BasicStroke. 0.4)))]
-				            (.drawRect g -1 -1 w h)
-				            (doseq [[[xa ya] [xb yb]] (map sort maze)]
-				               (let [[xc yc] (if (= xa xb) [(dec xa) ya] [xa (dec ya)])]
-					          (.drawLine g xa ya xc yc)))
-					    (.translate g -0.5 -0.5)
-					    (.setColor g java.awt.Color/RED)
-					    (doseq [[[xa ya] [xb yb]] path] (.drawLine g xa ya xb yb)))))
-					 (.setPreferredSize (java.awt.Dimension.
-				            (* 10 (inc w)) (* 10 (inc h))))))
+	(.setContentPane
+	   (doto (proxy [javax.swing.JPanel] []
+	      (paintComponent [^java.awt.Graphics g]
+	         (let [g (doto ^java.awt.Graphics2D (.create g)
+	            (.scale 10 10)
+	            (.translate 1.5 1.5)
+	            (.setStroke (java.awt.BasicStroke. 0.4)))]
+	            (.drawRect g -1 -1 w h)
+	            (doseq [[[xa ya] [xb yb]] (map sort maze)]
+	               (let [[xc yc] (if (= xa xb) [(dec xa) ya] [xa (dec ya)])]
+		          (.drawLine g xa ya xc yc)))
+		    (.translate g -0.5 -0.5)
+		    (.setColor g java.awt.Color/RED)
+		    (doseq [[[xa ya] [xb yb]] path] (.drawLine g xa ya xb yb)))))
+		 (.setPreferredSize
+			 (java.awt.Dimension.(* 10 (inc w)) (* 10 (inc h))))))
 	.pack
 	(.setVisible true)))
 
