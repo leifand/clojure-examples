@@ -1,9 +1,7 @@
 ;;; math1.clj
 ;;;
-;;; Leif Anderson November 28, 2016
-
+;;; Leif Anderson June 13, 2018
 ;;; quatratic equation solver
-;;; naive impl for testing
 ;;;
 (defn disciminant [a b c]
 	(- (* b b) (* 4 a c)))
@@ -25,11 +23,14 @@
 (defn solve-quadratic-equation [a b c]
 	(cond ((zero? (- (* b b) (* 4 a c)))
 					(find-one-solution a b))
-				((positive? (- (* b b) (* 4 a c)))
+				((> (- (* b b) (* 4 a c))0)
 					(find-two-solutions a b c))
-				(else '() )))
+				( '() )))
 
 (defn solve-equation [a b c]
 	(if (zero? a)
 		(solve-linear-equation b c)
 		(solve-quadratic-equation a b c)))
+
+;;; test
+(solve-equation 25 5 3)

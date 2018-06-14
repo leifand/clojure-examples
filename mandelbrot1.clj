@@ -61,4 +61,4 @@
 
 ;;(javax.imageio.ImageIO/write (render-image (mandelbrot -1.5 -1.3 -0.1 0.1 :width 800 :height 800 :depth 500)) "png" (java.io.File. "mandelbrot.png"))
 (javax.imageio.ImageIO/write (render-image (mandelbrot -2.25 0.75 -1.5 1.5 :width 2000 :height 2000 :depth 100))
-	"png" (java.io.File. "mandelbrot5002.png"))
+	"png" (java.io.File. "gs_mandelbrot.png"))
