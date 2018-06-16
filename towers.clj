@@ -12,5 +12,5 @@
             (towers (- n 1) intermediate destination source))))  
 
 ;;; test 
-(time (towers 4 "A" "C" "B"))
-;;;(time (towers 24 "A" "C" "B"))   
+;;;(time (towers 4 "A" "C" "B"))
+(time (towers 30 "A" "C" "B"))   
